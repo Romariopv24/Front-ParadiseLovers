@@ -17,7 +17,7 @@ export const HeroSection = () => {
   return (
     <div className="bg-white">
       <header className=" lg:w-7xl mx-auto">
-        <nav aria-label="Global" className="flex items-center lg:justify-between p-6 lg:px-8">
+        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
               <img
@@ -100,69 +100,30 @@ export const HeroSection = () => {
         </Dialog>
       </header>
       {/* bg-linear-65 from-purple-500 to-pink-500 */}
-      <div
-        className="w-full h-100 bg-linear-65 from-purple-500 to-pink-500"
-        // style={{ backgroundImage: `url(${rootImages.heroImage})` }}
-      >
 
-        {/* <div className="m-auto h-full max-w-2xl ">
-          <div className="text-center h-full">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
-              Papeleria Creativa
-            </h1>
-            <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started
-              </a>
-              <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </div> */}
-      </div>
-      <div className="relative isolate px-6 pt-14 lg:px-8 ">
 
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center ">
-            <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Announcing our next round of funding.{' '}
-              <a href="#" className="font-semibold text-indigo-600">
-                <span aria-hidden="true" className="absolute inset-0" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </div>
-          <div className="text-center">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
-              Data to enrich your online business
-            </h1>
-            <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started
-              </a>
-              <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
-            </div>
+
+      <div className="w-full my-5 relative flex items-center justify-center border border-gray-800 h-[400px] overflow-hidden">
+        {/* Imagen de fondo con opacidad */}
+        <img
+          src={rootImages.heroImage}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none select-none"
+        />
+        {/* Gradiente encima de la imagen */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#333232] opacity-90" />
+
+        {/* Contenido centrado */}
+        <div className="relative z-10 flex items-center justify-center w-full h-full">
+          <div className="w-50 h-50 lg:w-70 lg:h-70 mt-12 rounded-full bg-[#242323ff] flex items-center justify-center">
+            <img
+              src={rootImages.paradiseLogo}
+              alt="Paradise Logo"
+              className="w-49 h-49 lg:h-68 lg:w-68 object-contain rounded-full"
+            />
           </div>
         </div>
-
-      </div>
     </div>
+      </div>
   )
 }
