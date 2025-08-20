@@ -15,17 +15,16 @@ export const HeroSection = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-white">
-      <header className=" lg:w-7xl mx-auto">
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
+    <div className=" pt-[88px]">
+      <header className="fixed top-0 left-0 w-full z-50 bg-white shadow lg:w-full">
+        <nav aria-label="Global" className="flex items-center justify-between p-4 lg:px-8 max-w-7xl mx-auto">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
               <img
                 alt=""
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
+                src={rootImages.paradiseLogoMenu}
+                className="h-9 w-auto"
               />
-              <p className="text-xl/6 font-bold text-gray-700">Paradise</p>
             </a>
           </div>
           <div className="flex lg:hidden bg-gray-50">
@@ -60,7 +59,7 @@ export const HeroSection = () => {
                 <span className="sr-only">Your Company</span>
                 <img
                   alt=""
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                  src={rootImages.paradiseLogoMenu}
                   className="h-8 w-auto"
                 />
               </a>
@@ -87,12 +86,10 @@ export const HeroSection = () => {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
+                  <button className="flex items-center gap-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <ShoppingCartIcon className="h-5 w-5 text-white" aria-hidden="true" />
+                    <span>Carrito</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -103,15 +100,15 @@ export const HeroSection = () => {
 
 
 
-      <div className="w-full my-5 relative flex items-center justify-center border border-gray-800 h-[400px] overflow-hidden">
+      <div className="w-full mt-5 relative flex items-center justify-center border h-[400px] overflow-hidden">
         {/* Imagen de fondo con opacidad */}
         <img
           src={rootImages.heroImage}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none select-none"
         />
         {/* Gradiente encima de la imagen */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#333232] opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#ffff] opacity-90" />
 
         {/* Contenido centrado */}
         <div className="relative z-10 flex items-center justify-center w-full h-full">
@@ -123,7 +120,7 @@ export const HeroSection = () => {
             />
           </div>
         </div>
-    </div>
       </div>
+    </div>
   )
 }
