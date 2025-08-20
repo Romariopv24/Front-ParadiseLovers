@@ -15,15 +15,15 @@ export const HeroSection = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className=" pt-[88px]">
+    <div className="pt-[88px]">
       <header className="fixed top-0 left-0 w-full z-50 bg-white shadow lg:w-full">
-        <nav aria-label="Global" className="flex items-center justify-between p-4 lg:px-8 max-w-7xl mx-auto">
+        <nav aria-label="Global" className="flex items-center justify-between p-3 lg:p-3 lg:px-8 max-w-7xl mx-auto">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
               <img
                 alt=""
                 src={rootImages.paradiseLogoMenu}
-                className="h-9 w-auto"
+                className="h-7 lg:h-9 w-auto"
               />
             </a>
           </div>
@@ -60,7 +60,7 @@ export const HeroSection = () => {
                 <img
                   alt=""
                   src={rootImages.paradiseLogoMenu}
-                  className="h-8 w-auto"
+                  className="h-7 w-auto"
                 />
               </a>
               <button
@@ -100,23 +100,23 @@ export const HeroSection = () => {
 
 
 
-      <div className="w-full mt-5 relative flex items-center justify-center border h-[400px] overflow-hidden">
+      <div className="w-full mt-5 relative flex items-center justify-center border  lg:h-[400px] overflow-hidden">
         {/* Imagen de fondo con opacidad */}
         <img
           src={rootImages.heroImage}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none select-none"
+          className="absolute inset-0 lg:w-full lg:h-full object-cover opacity-70 pointer-events-none select-none"
         />
         {/* Gradiente encima de la imagen */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#ffff] opacity-90" />
 
         {/* Contenido centrado */}
         <div className="relative z-10 flex items-center justify-center w-full h-full">
-          <div className="w-50 h-50 lg:w-70 lg:h-70 mt-12 rounded-full bg-[#242323ff] flex items-center justify-center">
+          <div className="w-35 h-35 lg:w-70 lg:h-70 lg:mt-12 rounded-full bg-gray-400 flex items-center justify-center">
             <img
               src={rootImages.paradiseLogo}
               alt="Paradise Logo"
-              className="w-49 h-49 lg:h-68 lg:w-68 object-contain rounded-full"
+              className="w-34 h-34 lg:h-68 lg:w-68 object-contain rounded-full"
             />
           </div>
         </div>
