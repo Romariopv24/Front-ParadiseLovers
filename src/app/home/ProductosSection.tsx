@@ -45,6 +45,8 @@ const textoBotones = [
 export const ProductosSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const { addToCart } = useAppStore();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const url = "https://paradise-backend-usfa.onrender.com/api/v1/products";
@@ -107,7 +109,10 @@ export const ProductosSection = () => {
                   <p className="text-lg font-bold text-indigo-600 mt-2">${product.data.price}</p>
                   <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                     <button
-                      onClick={() => console.log('Ver producto:', product.id)}
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setIsModalOpen(true);
+                      }}
                       className="flex-1 bg-blue-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-blue-700 transition-colors"
                     >
                       Ver Producto
@@ -123,6 +128,50 @@ export const ProductosSection = () => {
               </div>
             ))}
           </div>
+
+          {/* Modal */}
+          {isModalOpen && selectedProduct && (
+            <div className="fixed inset-0 bg-transparent bg-opacity-20 backdrop-blur-lg flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
+                <div className="p-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-semibold">{selectedProduct.data.name}</h3>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <img
+                    src={selectedProduct.data.image}
+                    alt={selectedProduct.data.name}
+                    className="w-full h-48 object-cover rounded-md mb-4"
+                  />
+                  <p className="text-sm text-gray-600 mb-2"><strong>Categoría:</strong> {selectedProduct.data.category}</p>
+                  <p className="text-sm text-gray-700 mb-4">{selectedProduct.data.description}</p>
+                  <p className="text-xl font-bold text-indigo-600 mb-4">${selectedProduct.data.price}</p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        addToCart(selectedProduct);
+                        setIsModalOpen(false);
+                      }}
+                      className="flex-1 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                    >
+                      Añadir al Carrito
+                    </button>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700"
+                    >
+                      Cerrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
 
