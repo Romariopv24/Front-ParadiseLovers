@@ -100,23 +100,23 @@ export const HeroSection = () => {
 
 
 
-      <div className="w-full mt-5 relative flex items-center justify-center border  lg:h-[400px] overflow-hidden">
+      <div className="w-full mt-5 relative flex items-center justify-center border  lg:h-[200px] overflow-hidden">
         {/* Imagen de fondo con opacidad */}
         <img
           src={rootImages.heroImage}
           alt=""
-          className="absolute inset-0 lg:w-full lg:h-full object-cover opacity-70 pointer-events-none select-none"
+          className="object-cover absolute lg:w-full lg:h-full  opacity-70 pointer-events-none select-none"
         />
         {/* Gradiente encima de la imagen */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#ffff] opacity-90" />
 
         {/* Contenido centrado */}
         <div className="relative z-10 flex items-center justify-center w-full h-full">
-          <div className="w-35 h-35 lg:w-70 lg:h-70 lg:mt-12 rounded-full bg-gray-400 flex items-center justify-center">
+          <div className="w-35 h-35 lg:w-60 lg:h-60 lg:mt-12 rounded-full bg-gray-400 flex items-center justify-center">
             <img
               src={rootImages.paradiseLogo}
               alt="Paradise Logo"
-              className="w-34 h-34 lg:h-68 lg:w-68 object-contain rounded-full"
+              className="w-34 h-34 lg:h-58 lg:w-58 object-contain rounded-full"
             />
           </div>
         </div>

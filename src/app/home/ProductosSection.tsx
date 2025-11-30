@@ -1,5 +1,6 @@
+'use client'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const textoBotones = [
   {
@@ -41,6 +42,21 @@ const textoBotones = [
 ]
 
 export const ProductosSection = () => {
+
+    useEffect(() => {
+  const url = "https://paradise-backend-usfa.onrender.com/api/v1/products";
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Productos obtenidos:", data);
+    })
+    .catch((error) => {
+      console.error("Error al obtener los productos:", error);
+    });      
+
+  }, [])
+
   return (
     <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
