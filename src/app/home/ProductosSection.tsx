@@ -1,6 +1,7 @@
 'use client'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import useAppStore, { Product } from '../store/useStore'
 
 const textoBotones = [
   {
@@ -42,19 +43,20 @@ const textoBotones = [
 ]
 
 export const ProductosSection = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const { addToCart } = useAppStore();
 
-    useEffect(() => {
-  const url = "https://paradise-backend-usfa.onrender.com/api/v1/products";
+  useEffect(() => {
+    const url = "https://paradise-backend-usfa.onrender.com/api/v1/products";
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Productos obtenidos:", data);
-    })
-    .catch((error) => {
-      console.error("Error al obtener los productos:", error);
-    });      
-
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los productos:", error);
+      });
   }, [])
 
   return (
@@ -86,6 +88,41 @@ export const ProductosSection = () => {
     ))}
   </div>
 </div>
+
+          {/* Grid de productos */}
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
+            {products.map((product) => (
+              <div key={product.id} className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="relative w-full h-32">
+                  <img
+                    src={product.data.image}
+                    alt={product.data.name}
+                    className="object-cover w-full h-32"
+                  />
+                </div>
+                <div className="p-3">
+                  <h3 className="text-base font-semibold text-gray-900">{product.data.name}</h3>
+                  <p className="text-xs text-gray-600 mt-1">{product.data.category}</p>
+                  <p className="text-xs text-gray-700 mt-2">{product.data.description}</p>
+                  <p className="text-lg font-bold text-indigo-600 mt-2">${product.data.price}</p>
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                    <button
+                      onClick={() => console.log('Ver producto:', product.id)}
+                      className="flex-1 bg-blue-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                      Ver Producto
+                    </button>
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="flex-1 bg-green-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-green-700 transition-colors"
+                    >
+                      Añadir al Carrito
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
         </div>
 
