@@ -97,7 +97,11 @@ export const ProductosSection = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                onClick={() => setSelectedProduct(selectedProduct?.id === product.id ? null : product)}
+                className={
+                  `bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer self-start transform transition duration-300 ` +
+                  (selectedProduct?.id === product.id ? 'scale-105 z-10 shadow-lg' : 'scale-100 hover:shadow-lg')
+                }
               >
                 <div className="relative w-full h-32">
                   <img
@@ -144,7 +148,7 @@ export const ProductosSection = () => {
                                 e.stopPropagation();
                                 removeFromCart(product.id);
                               }}
-                              className="bg-red-600 w-60 text-white px-3 py-1.5 text-xs rounded-md hover:bg-red-700 transition-colors"
+                              className="bg-red-600 w-full sm:w-60 text-white px-3 py-1.5 text-xs rounded-md hover:bg-red-700 transition-colors"
                             >
                               Eliminar
                             </button>
