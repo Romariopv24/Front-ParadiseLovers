@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { HeroSection } from "./home/HeroSection";
 import { ProductosSection } from "./home/ProductosSection";
+import { CartFooter } from "./components/CartFooter";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <ProductosSection />
 
       <ProductosSection /> */}
-
+    <CartFooter />
     </>
   );
 }

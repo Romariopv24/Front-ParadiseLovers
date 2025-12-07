@@ -1,7 +1,7 @@
 'use client'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import React, { useEffect, useState } from 'react'
-import useAppStore, { Product } from '../store/useStore'
+import useAppStore, { Product, CartItem } from '../store/useStore'
 
 const textoBotones = [
   {
@@ -44,7 +44,7 @@ const textoBotones = [
 
 export const ProductosSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const { addToCart } = useAppStore();
+  const { addToCart, cart, increaseQuantity, decreaseQuantity, removeFromCart } = useAppStore();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,6 +54,7 @@ export const ProductosSection = () => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setProducts(data);
       })
       .catch((error) => {
@@ -94,84 +95,80 @@ export const ProductosSection = () => {
           {/* Grid de productos */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
             {products.map((product) => (
-              <div key={product.id} className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div
+                key={product.id}
+                className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+              >
                 <div className="relative w-full h-32">
                   <img
-                    src={product.data.image}
-                    alt={product.data.name}
+                    src={product.image}
+                    alt={product.name}
                     className="object-cover w-full h-32"
                   />
                 </div>
                 <div className="p-3">
-                  <h3 className="text-base font-semibold text-gray-900">{product.data.name}</h3>
-                  <p className="text-xs text-gray-600 mt-1">{product.data.category}</p>
-                  <p className="text-xs text-gray-700 mt-2">{product.data.description}</p>
-                  <p className="text-lg font-bold text-indigo-600 mt-2">${product.data.price}</p>
+                  <h3 className="text-base font-semibold text-gray-900">{product.name}</h3>
+                  <p className="text-xs text-gray-600 mt-1">{product.category}</p>
+                  <p className="text-xs text-gray-700 mt-2">{product.description}</p>
+                  <p className="text-lg font-bold text-indigo-600 mt-2">${product.price}</p>
                   <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                    <button
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setIsModalOpen(true);
-                      }}
-                      className="flex-1 bg-blue-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-blue-700 transition-colors"
-                    >
-                      Ver Producto
-                    </button>
-                    <button
-                      onClick={() => addToCart(product)}
-                      className="flex-1 bg-green-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-green-700 transition-colors"
-                    >
-                      Añadir al Carrito
-                    </button>
+                    {(() => {
+                      const cartItem = cart.find(item => item.product.id === product.id);
+                      if (cartItem) {
+                        return (
+                          <div className="flex flex-col sm:items-center gap-2 w-full">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  decreaseQuantity(product.id);
+                                }}
+                                className="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 flex items-center justify-center text-sm font-bold"
+                              >
+                                -
+                              </button>
+                              <span className="text-sm font-medium text-black">Cantidad: {cartItem.quantity}</span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  increaseQuantity(product.id);
+                                }}
+                                className="w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 flex items-center justify-center text-sm font-bold"
+                                disabled={cartItem.quantity >= 10}
+                              >
+                                +
+                              </button>
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeFromCart(product.id);
+                              }}
+                              className="bg-red-600 w-60 text-white px-3 py-1.5 text-xs rounded-md hover:bg-red-700 transition-colors"
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(product);
+                            }}
+                            className="flex-1 bg-green-600 text-white px-3 py-1.5 text-xs rounded-md hover:bg-green-700 transition-colors"
+                          >
+                            Añadir al Carrito
+                          </button>
+                        );
+                      }
+                    })()}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Modal */}
-          {isModalOpen && selectedProduct && (
-            <div className="fixed inset-0 bg-transparent bg-opacity-20 backdrop-blur-lg flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">{selectedProduct.data.name}</h3>
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                  <img
-                    src={selectedProduct.data.image}
-                    alt={selectedProduct.data.name}
-                    className="w-full h-48 object-cover rounded-md mb-4"
-                  />
-                  <p className="text-sm text-gray-600 mb-2"><strong>Categoría:</strong> {selectedProduct.data.category}</p>
-                  <p className="text-sm text-gray-700 mb-4">{selectedProduct.data.description}</p>
-                  <p className="text-xl font-bold text-indigo-600 mb-4">${selectedProduct.data.price}</p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        addToCart(selectedProduct);
-                        setIsModalOpen(false);
-                      }}
-                      className="flex-1 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-                    >
-                      Añadir al Carrito
-                    </button>
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700"
-                    >
-                      Cerrar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
 
         </div>
 
