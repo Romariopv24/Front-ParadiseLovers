@@ -9,6 +9,40 @@ const CartPage = () => {
   const router = useRouter();
 
   const total = getCartTotal();
+  // Configure your WhatsApp number as NEXT_PUBLIC_WHATSAPP_NUMBER in .env.local (format: country code + number, no + or spaces)
+  // Example: NEXT_PUBLIC_WHATSAPP_NUMBER=549123456789
+  const WHATSAPP_NUMBER =  '584146016516';
+
+  const handleWhatsappCheckout = () => {
+    if (!cart || cart.length === 0) return;
+
+    // Build a readable, well-formatted message using newlines (will be encoded by encodeURIComponent)
+    const lines: string[] = [];
+    lines.push('Pedido - ParadiseLovers');
+    lines.push('');
+    lines.push('Detalle de productos:');
+
+    cart.forEach((item, index) => {
+      const unitPrice = parseFloat(item.product.price);
+      const subtotal = (unitPrice * item.quantity);
+      lines.push(`${index + 1}. ${item.product.name}`);
+      lines.push(`   Cantidad: ${item.quantity}`);
+      lines.push(`   Precio unitario: $${unitPrice.toFixed(2)}`);
+      lines.push(`   Subtotal: $${subtotal.toFixed(2)}`);
+      lines.push('');
+    });
+
+    lines.push(`Total: $${total.toFixed(2)}`);
+    lines.push('');
+    lines.push('Gracias por su compra. Por favor confirme su pedido respondiendo a este mensaje.');
+
+    const message = lines.join('\n');
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    // Open WhatsApp (web or app) in a new tab
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank');
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -69,7 +103,7 @@ const CartPage = () => {
               <span className="font-semibold">${total.toFixed(2)}</span>
             </div>
             <div className="text-sm text-gray-500 mb-4">Impuestos y envío se calcularán en el checkout.</div>
-            <button className="w-full bg-green-600 text-white py-2 rounded-md mb-2">Ir a pagar</button>
+            <button onClick={handleWhatsappCheckout} className="w-full bg-green-600 text-white py-2 rounded-md mb-2">Ir a pagar</button>
             <button onClick={() => { clearCart(); router.push('/'); }} className="w-full bg-red-600 text-white py-2 rounded-md">Vaciar carrito</button>
           </aside>
         </div>
