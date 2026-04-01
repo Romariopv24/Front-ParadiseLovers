@@ -22,7 +22,7 @@ export const Hero = ({
 }: HeroProps) => {
   return (
     <section className="relative overflow-hidden ">
-      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-stretch lg:h-[500px] lg:grid-cols-12">
+      <div className="mx-auto grid w-full  grid-cols-1 items-stretch lg:h-[500px] lg:grid-cols-12">
         <div className="order-2 flex flex-col justify-center gap-6 px-8 py-10 lg:order-1 lg:col-span-6 lg:justify-self-stretch lg:py-0">
           <div>
             <p className="text-[44px] font-extrabold leading-[1.02] tracking-[-0.025em] text-[#cea2fd] sm:text-[54px] lg:text-[72px] lg:leading-[72px] lg:tracking-[-1.8px]">
@@ -68,7 +68,7 @@ export const Hero = ({
           </div>
         </div>
 
-        <div className="order-1 lg:order-2 lg:col-span-6">
+        <div className="order-1 hidden md:block lg:order-2 lg:col-span-6">
           <div className="h-[280px] w-full bg-neutral-100 sm:h-[360px] lg:h-full lg:min-h-[500px]">
             {/* TODO: Insertar imagen aquí */}
           </div>
