@@ -7,13 +7,6 @@ export default function Home() {
     <>
       <HeroSection />
       <ProductosSection />
-      {/* <ProductosSection />
-
-      <ProductosSection />
-
-      <ProductosSection />
-
-      <ProductosSection /> */}
     <CartFooter />
     </>
   );
