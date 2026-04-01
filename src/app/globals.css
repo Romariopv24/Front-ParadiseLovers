@@ -1,28 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  /* Use Nunito provided by next/font variable set in layout.tsx */
-  --font-sans: var(--font-nunito);
+  /* ── Typography ── */
+  --font-sans: var(--font-jakarta);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #fcf8fb;
-    --foreground: #ededed;
-  }
+  /* ── Core Palette (Paradise Gate – "Tactile Dreamscape") ── */
+  --color-primary: #75525b;
+  --color-primary-container: #ffd1dc;
+  --color-primary-dim: #684650;
+  --color-on-primary: #ffeff1;
+  --color-on-primary-container: #66454e;
+
+  --color-secondary: #2f6275;
+  --color-secondary-container: #b2e4fb;
+  --color-on-secondary: #e4f5ff;
+  --color-on-secondary-container: #1f5467;
+
+  --color-tertiary: #6e5275;
+  --color-tertiary-container: #f5d1fb;
+  --color-on-tertiary-container: #604567;
+
+  --color-error: #b41340;
+
+  /* ── Surfaces ── */
+  --color-surface: #f6f6f6;
+  --color-surface-bright: #f6f6f6;
+  --color-surface-dim: #d3d5d5;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f0f1f1;
+  --color-surface-container: #e7e8e8;
+  --color-surface-high: #e1e3e3;
+  --color-surface-highest: #dbdddd;
+
+  /* ── On-Surface & Outline ── */
+  --color-on-surface: #2d2f2f;
+  --color-on-surface-variant: #5a5c5c;
+  --color-outline: #767777;
+  --color-outline-variant: #acadad;
+  --color-inverse-surface: #0c0f0f;
+  --color-inverse-on-surface: #9c9d9d;
+
+  /* ── Shadows ── */
+  --shadow-kawaii: 0px 20px 40px rgba(45, 47, 47, 0.06);
+  --shadow-kawaii-lg: 0px 30px 60px rgba(45, 47, 47, 0.08);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  /* Apply the configured sans font variable with sensible fallbacks */
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }

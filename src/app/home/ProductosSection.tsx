@@ -1,123 +1,66 @@
 'use client'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/solid'
-import React, { useEffect, useState } from 'react'
-import useAppStore, { Product, CartItem } from '../store/useStore'
+import React, { useState } from 'react'
+import useAppStore from '../store/useStore'
+import { ProductFilters } from '../components/ProductFilters'
+import { useProducts } from '../../hooks/useProducts'
+import { Products } from '@/types/products.types'
 
-const textoBotones = [
-  {
-    texto: "Sanrio"
-  },
-  {
-    texto: "Hello Kitty"
-  },
-  {
-    texto: "Aggretsuko"
-  },
-  {
-    texto: "Keroppi"
-  },
-  {
-    texto: "Cinnamoroll"
-  },
-  {
-    texto: "Anime"
-  },
-  {
-    texto: "Papeleria"
-  },
-    {
-    texto: "Papeleria"
-  },
-    {
-    texto: "Papeleria"
-  },
-    {
-    texto: "Papeleria"
-  },
-    {
-    texto: "Papeleria"
-  },
-    {
-    texto: "Papeleria"
-  },
-]
+const categories = ['Todos', 'Sanrio', 'Hello Kitty', 'Aggretsuko', 'Keroppi', 'Cinnamoroll', 'Anime', 'Papeleria']
 
 export const ProductosSection = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const { addToCart, cart, increaseQuantity, decreaseQuantity, removeFromCart } = useAppStore();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: products = [], isLoading, isError, error } = useProducts();
+  const { addToCart, cart, increaseQuantity, decreaseQuantity } = useAppStore();
+  const [selectedProduct, setSelectedProduct] = useState<Products | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
+  const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
-    const url = "https://paradise-backend-usfa.onrender.com/api/v1/products";
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === 'Todos' || product.category?.toLowerCase().includes(selectedCategory.toLowerCase())
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.message === "Error al obtener productos de Supabase") {
-        setProducts([]);
-        return;
-        } else {
-          setProducts(data);
-        }
+    const matchesSearch = product.name.toLowerCase().includes(searchValue.toLowerCase())
 
-      })
-      .catch((error) => {
-        console.error("Error al obtener los productos:", error);
-        setProducts([]);
-      });
-  }, [])
+    return matchesCategory && matchesSearch
+  })
+
+  const loadingSkeletons = Array.from({ length: 8 }, (_, index) => index)
 
   return (
-    <div className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="text-3xl font-semibold text-gray-800">Nuestros Productos</h2>
-        <div className="mt-6 flex flex-wrap ">
-          {/* Aquí puedes mapear tus productos */}
-          <div className="relative w-full flex flex-col gap-2 py-2">
-  <div className="relative w-full mb-2">
-    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-      <MagnifyingGlassIcon className="w-5 h-5 text-gray-400 pointer-events-none" />
-    </span>
-    <input
-      type="text"
-      placeholder="Buscar producto..."
-      className="w-full py-3 pl-10 pr-4 bg-white border border-gray-200 rounded-2xl shadow-sm text-sm placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-shadow"
-    />
-  </div>
-  <div className="flex overflow-x-auto gap-2 mb-2 no-scrollbar pb-2 -mx-2 px-2 snap-x">
-    <button
-      onClick={() => setSelectedCategory('Todos')}
-      className={`snap-start shrink-0 px-5 py-2 text-sm font-semibold rounded-full transition-all transform hover:scale-105 focus-visible:outline-none flex items-center justify-center ` +
-        (selectedCategory === 'Todos'
-          ? 'bg-indigo-600 text-white shadow-lg hover:bg-indigo-700'
-          : 'bg-white text-gray-700 border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-indigo-600')}
-    >
-      Todos
-    </button>
-    {textoBotones.map((boton, index) => {
-      const active = selectedCategory === boton.texto;
-      return (
-        <button
-          key={index}
-          onClick={() => setSelectedCategory(boton.texto)}
-          className={`snap-start shrink-0 px-5 py-2 text-sm font-semibold rounded-full transition-all flex items-center justify-center ` +
-            (active
-              ? 'bg-indigo-600 text-white shadow-lg hover:bg-indigo-700'
-              : 'bg-white text-gray-700 border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-indigo-600')}
-        >
-          <span className="whitespace-nowrap">{boton.texto}</span>
-        </button>
-      );
-    })}
-  </div>
-</div>
+    <div className="bg-[#ffffff] py-24 sm:py-12">
+      <div className="mx-auto w-full max-w-[1280px] px-8">
+        <div className="mt-6 flex flex-wrap">
+          <div className="relative w-full py-2">
+            <ProductFilters
+              categories={categories}
+              activeCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              onSearchChange={setSearchValue}
+            />
+          </div>
 
           {/* Grid de productos */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
-            {products.map((product) => (
+            {isLoading && loadingSkeletons.map((item) => (
+              <div
+                key={`skeleton-${item}`}
+                className="animate-pulse rounded-lg border border-gray-200 bg-white p-3"
+              >
+                <div className="mb-3 aspect-square rounded-xl bg-gray-100" />
+                <div className="mb-2 h-5 w-3/4 rounded bg-gray-100" />
+                <div className="mb-3 h-4 w-full rounded bg-gray-100" />
+                <div className="h-6 w-1/2 rounded bg-gray-100" />
+              </div>
+            ))}
+
+            {isError && (
+              <div className="col-span-full rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                No pudimos cargar los productos en este momento. Intenta de nuevo en unos segundos.
+                {error instanceof Error ? ` ${error.message}` : ''}
+              </div>
+            )}
+
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 onClick={() => setSelectedProduct(selectedProduct?.id === product.id ? null : product)}
