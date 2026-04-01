@@ -37,7 +37,7 @@ export const ProductosSection = () => {
           </div>
 
           {/* Grid de productos */}
-          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid w-full grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {isLoading && loadingSkeletons.map((item) => (
               <ProductCardSkeleton key={`skeleton-${item}`} />
             ))}

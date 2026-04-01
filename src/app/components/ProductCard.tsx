@@ -3,15 +3,37 @@
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { MinusIcon } from '@heroicons/react/24/outline'
 import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
 import Image from 'next/image'
 import { Products } from '@/types/products.types'
+import useAppStore from '../store/useStore'
 
 
 
 export const ProductCard = ({ product }: { product: Products }) => {
-  const [quantity, setQuantity] = useState(0)
+  const { cart, addToCart, increaseQuantity, decreaseQuantity } = useAppStore()
+  const cartItem = cart.find((item) => item.product.id === product.id)
+  const quantity = cartItem?.quantity ?? 0
+  const isInCart = quantity > 0
   const isAnime = product.category?.toLowerCase() === 'anime'
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      category: product.category,
+      description: product.description,
+    })
+  }
+
+  const handleDecrease = () => {
+    decreaseQuantity(product.id)
+  }
+
+  const handleIncrease = () => {
+    increaseQuantity(product.id)
+  }
 
   return (
     <article className="group flex h-full flex-col rounded-[30px]  p-4 shadow-[0px_14px_30px_0px_rgba(26,18,38,0.08)] transition-all duration-300 hover:shadow-[0px_20px_36px_0px_rgba(26,18,38,0.11)]">
@@ -43,26 +65,36 @@ export const ProductCard = ({ product }: { product: Products }) => {
       </div>
 
       <div className="mt-auto rounded-full bg-[#FDF8FF] px-[7px] py-[5px] shadow-[0px_10px_18px_0px_rgba(142,83,208,0.16)]">
-        <div className="flex items-center justify-between">
+        {isInCart ? (
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={handleDecrease}
+              disabled={quantity === 0}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[#caa7ef] bg-[#d9b8ff] text-[#8d55cf] shadow-[0px_2px_6px_0px_rgba(87,49,136,0.12)] transition-all duration-300 hover:bg-[#ceadf3] disabled:opacity-40"
+              aria-label="Restar cantidad"
+            >
+              <MinusIcon className="h-4 w-4" />
+            </button>
+            <span className="min-w-8 text-center text-[18px] font-medium leading-none text-[#232323]">{quantity}</span>
+            <button
+              type="button"
+              onClick={handleIncrease}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[#caa7ef] bg-[#d9b8ff] text-[#8d55cf] shadow-[0px_2px_6px_0px_rgba(87,49,136,0.12)] transition-all duration-300 hover:bg-[#ceadf3]"
+              aria-label="Sumar cantidad"
+            >
+              <PlusIcon className="h-4 w-4" />
+            </button>
+          </div>
+        ) : (
           <button
             type="button"
-            onClick={() => setQuantity((value) => Math.max(0, value - 1))}
-            disabled={quantity === 0}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#caa7ef] bg-[#d9b8ff] text-[#8d55cf] shadow-[0px_2px_6px_0px_rgba(87,49,136,0.12)] transition-all duration-300 hover:bg-[#ceadf3]"
-            aria-label="Restar cantidad"
+            onClick={handleAddToCart}
+            className="w-full p-2 rounded-full bg-[#d9b8ff] px-4 text-center text-[14px] font-semibold text-[#5f3b8a] transition-all duration-300 hover:bg-[#ceadf3]"
           >
-            <MinusIcon className="h-4 w-4" />
+            AÑADIR AL CARRITO
           </button>
-          <span className="min-w-8 text-center text-[18px] font-medium leading-none text-[#232323]">{quantity}</span>
-          <button
-            type="button"
-            onClick={() => setQuantity((value) => value + 1)}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#caa7ef] bg-[#d9b8ff] text-[#8d55cf] shadow-[0px_2px_6px_0px_rgba(87,49,136,0.12)] transition-all duration-300 hover:bg-[#ceadf3]"
-            aria-label="Sumar cantidad"
-          >
-            <PlusIcon className="h-4 w-4" />
-          </button>
-        </div>
+        )}
       </div>
     </article>
   )
