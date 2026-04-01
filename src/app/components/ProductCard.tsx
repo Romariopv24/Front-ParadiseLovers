@@ -90,9 +90,9 @@ export const ProductCard = ({ product }: { product: Products }) => {
           <button
             type="button"
             onClick={handleAddToCart}
-            className="w-full p-2 rounded-full bg-[#d9b8ff] px-4 text-center text-[14px] font-semibold text-[#5f3b8a] transition-all duration-300 hover:bg-[#ceadf3]"
+            className="w-full p-2 text-center rounded-full bg-[#d9b8ff] px-4 font-semibold text-[#5f3b8a] transition-all duration-300 hover:bg-[#ceadf3]"
           >
-            AÑADIR AL CARRITO
+           <span className=' text-xs md:text-[14px]'>AÑADIR AL CARRITO</span> 
           </button>
         )}
       </div>
