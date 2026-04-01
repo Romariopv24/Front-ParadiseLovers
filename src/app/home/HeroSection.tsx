@@ -41,8 +41,8 @@ export const HeroSection = () => {
                     href={item.href}
                     className={`text-base leading-6 tracking-[-0.025em] transition-colors duration-200 ${
                       isActive
-                        ? 'border-b-2 border-black pb-[2px] font-bold text-black'
-                        : 'font-normal text-black/60 hover:text-black'
+                        ? 'border-b-2 border-black  font-bold text-black'
+                        : 'font-normal text-black/60 hover:text-black hover:border-b-2 hover:border-black'
                     }`}
                   >
                     {item.name}
