@@ -1,7 +1,13 @@
 import { CartView } from '../components/CartView'
+import { Navbar } from '../components/Navbar'
 
 const CartPage = () => {
-  return <CartView />
+  return (
+    <>
+    <Navbar />
+    <CartView />
+    </>
+)
 }
 
 export default CartPage

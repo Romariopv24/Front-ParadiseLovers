@@ -24,7 +24,7 @@ export const ProductosSection = () => {
   const loadingSkeletons = Array.from({ length: 8 }, (_, index) => index)
 
   return (
-    <div className="bg-[#ffffff]  md:py-12">
+    <div id="productos" className="bg-[#ffffff]  md:py-12">
       <div className="mx-auto w-full  px-8">
         <div className="mt-6 flex flex-wrap">
           <div className="relative w-full py-2">
