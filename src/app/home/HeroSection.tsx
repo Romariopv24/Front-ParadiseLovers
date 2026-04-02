@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, ShoppingBagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { rootImages } from '../core/rootImages'
+import Link from 'next/link'
 import { Hero } from '../components/Hero/Hero'
+import useAppStore from '../store/useStore'
 
 const navigation: { name: string; href: string }[] = [
   { name: 'Productos', href: '#productos' },
@@ -13,6 +14,9 @@ const navigation: { name: string; href: string }[] = [
 
 export const HeroSection = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const cartItemsCount = useAppStore((state) =>
+    state.cart.reduce((sum, item) => sum + item.quantity, 0),
+  )
 
   return (
     <div className="pt-[72px] lg:pt-[95px] bg-white">
@@ -66,12 +70,18 @@ export const HeroSection = () => {
 
           {/* Desktop right icons */}
           <div className="hidden items-center gap-[18px] lg:flex">
-            <button
-              className="flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors duration-200 hover:bg-black/5"
+            <Link
+              href="/cart"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors duration-200 hover:bg-black/5"
               aria-label="Carrito"
             >
               <ShoppingBagIcon className="h-[19px] w-[22px]" aria-hidden="true" />
-            </button>
+              {cartItemsCount > 0 && (
+                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#d9b8ff] px-1 text-[10px] font-bold leading-none text-[#4d2f68]">
+                  {cartItemsCount > 9 ? '9+' : cartItemsCount}
+                </span>
+              )}
+            </Link>
             <button
               className="flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors duration-200 hover:bg-black/5"
               aria-label="Mi cuenta"
