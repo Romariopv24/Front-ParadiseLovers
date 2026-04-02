@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, ShoppingBagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
@@ -13,9 +13,39 @@ const navigation: { name: string; href: string }[] = [
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
   const cartItemsCount = useAppStore((state) =>
     state.cart.reduce((sum, item) => sum + item.quantity, 0),
   )
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window === 'undefined' || window.location.pathname !== '/') {
+        setActiveSection('')
+        return
+      }
+
+      const sections = ['productos', 'contacto']
+      const scrollPosition = window.scrollY + 100 // offset for navbar height
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            return
+          }
+        }
+      }
+      setActiveSection('')
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // initial check
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <div className="pt-[72px] lg:pt-[95px] bg-white">
@@ -36,7 +66,8 @@ export const Navbar = () => {
             {/* Desktop nav links */}
             <div className="hidden items-center gap-6 lg:flex">
               {navigation.map((item, index) => {
-                const isActive = index === 0
+                const sectionId = item.href.split('#')[1]
+                const isActive = activeSection === sectionId
 
                 return (
                   <a
@@ -45,7 +76,7 @@ export const Navbar = () => {
                     className={`text-base leading-6 tracking-[-0.025em] transition-colors duration-200 ${
                       isActive
                         ? 'border-b-2 border-black  font-bold text-black'
-                        : 'font-normal text-black/60 hover:text-black hover:border-b-2 hover:border-black'
+                        : 'font-normal text-black/60 hover:text-black'
                     }`}
                   >
                     {item.name}
