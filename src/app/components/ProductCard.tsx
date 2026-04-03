@@ -53,18 +53,18 @@ export const ProductCard = ({ product }: { product: Products }) => {
       </div>
 
       <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="line-clamp-2 text-[24px] font-semibold leading-[1.05] tracking-[-0.02em] text-[#121212]">
+        <h3 className="line-clamp-2 md:text-[24px] font-semibold leading-[1.05] tracking-[-0.02em] text-[#121212]">
           {product.name}
         </h3>
-        <span className="shrink-0 text-[22px] font-medium leading-none text-[#121212]">${product.price}</span>
+        <span className="shrink-0 md:text-[22px] font-medium leading-none text-[#121212]">${product.price}</span>
       </div>
 
-      <div className="mb-5 flex items-center gap-1.5 text-[11px] font-normal leading-none text-[#7f7f7f]">
+      {/* <div className="mb-5 flex items-center gap-1.5 text-[11px] font-normal leading-none text-[#7f7f7f]">
         <ArchiveBoxIcon className="h-[11px] w-[11px]" />
         <span>Disponibles: {product.quantity}</span>
-      </div>
+      </div> */}
 
-      <div className="mt-auto rounded-full bg-[#FDF8FF] px-[7px] py-[5px] shadow-[0px_10px_18px_0px_rgba(142,83,208,0.16)]">
+      <div className="mt-5 rounded-full bg-[#FDF8FF] md:px-[7px] md:py-[5px] shadow-[0px_10px_18px_0px_rgba(142,83,208,0.16)]">
         {isInCart ? (
           <div className="flex items-center justify-between">
             <button
@@ -90,9 +90,9 @@ export const ProductCard = ({ product }: { product: Products }) => {
           <button
             type="button"
             onClick={handleAddToCart}
-            className="w-full p-2 text-center rounded-full bg-[#d9b8ff] px-4 font-semibold text-[#5f3b8a] transition-all duration-300 hover:bg-[#ceadf3]"
+            className="w-full md:p-2 text-center rounded-full bg-[#d9b8ff]  font-semibold text-[#5f3b8a] transition-all duration-300 hover:bg-[#ceadf3]"
           >
-           <span className=' text-xs md:text-[14px]'>AÑADIR AL CARRITO</span> 
+           <span className='text-xs md:text-[14px]'>AÑADIR AL CARRITO</span> 
           </button>
         )}
       </div>

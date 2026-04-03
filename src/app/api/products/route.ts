@@ -31,7 +31,6 @@ export const GET:RouteHandler = async () => {
     }
 
     const data = await response.json()
-    console.log(data)
     return NextResponse.json(data.map(normalizeProduct))
 
   } catch (error) {

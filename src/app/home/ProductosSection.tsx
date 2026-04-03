@@ -25,7 +25,7 @@ export const ProductosSection = () => {
 
   return (
     <div id="productos" className="bg-[#ffffff]  md:py-12">
-      <div className="mx-auto w-full  px-8">
+      <div className="mx-auto w-full px-2 md:px-8">
         <div className="mt-6 flex flex-wrap">
           <div className="relative w-full py-2">
             <ProductFilters

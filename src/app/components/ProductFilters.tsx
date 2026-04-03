@@ -28,7 +28,7 @@ export const ProductFilters = ({
 
   return (
     <div className="w-full">
-      <h2 className="mb-6 text-[36px] font-semibold leading-[36px] tracking-[-0.02em] text-[#2d2f2f]">
+      <h2 className="mb-6 text-center md:text-left text-[30px] md:text-[36px] font-semibold leading-[36px] tracking-[-0.02em] text-[#2d2f2f]">
         {title}
       </h2>
 
