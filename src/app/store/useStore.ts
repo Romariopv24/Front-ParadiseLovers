@@ -92,7 +92,7 @@ const useAppStore = create<AppState>((set, get) => ({
     }),
   increaseQuantity: (id) => set((state) => {
     const item = state.cart.find(item => item.product.id === id);
-    if (item && item.quantity < 10) {
+    if (item) {
       item.quantity += 1;
       console.log('Cantidad aumentada para', id, 'a', item.quantity);
     }

@@ -2,7 +2,6 @@
 
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { MinusIcon } from '@heroicons/react/24/outline'
-import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { Products } from '@/types/products.types'
 import useAppStore from '../store/useStore'

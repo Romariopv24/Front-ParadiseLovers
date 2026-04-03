@@ -40,7 +40,7 @@ export const CartFooter = () => {
 
         <Link
           href="/cart"
-          className="inline-flex h-8 md:h-12 items-center gap-2 rounded-full bg-[#d5b1ff] p-1 md:px-8 font-semibold text-[#4d2f68] transition-all duration-300 hover:opacity-90"
+          className="inline-flex h-8 md:h-12 items-center gap-2 rounded-full bg-[#d5b1ff] p-2 md:px-8 font-semibold text-[#4d2f68] transition-all duration-300 hover:opacity-90"
         >
           <span className='text-[10px] md:text-lg'>Ver Carrito</span>
           <ArrowRightIcon className="h-3 w-3" />
