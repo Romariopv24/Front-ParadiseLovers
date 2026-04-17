@@ -2,7 +2,8 @@ export interface HeroProps {
   titlePrefix: string
   titleGradientLine1: string
   titleGradientLine2: string
-  description: string[]
+  description: string
+  description2: string
   primaryAction: {
     label: string
     href: string
@@ -18,6 +19,7 @@ export const Hero = ({
   titleGradientLine1,
   titleGradientLine2,
   description,
+  description2,
   secondaryAction,
 }: HeroProps) => {
   return (
@@ -25,22 +27,18 @@ export const Hero = ({
       <div className="mx-auto grid w-full  grid-cols-1 items-stretch lg:h-[500px] lg:grid-cols-12">
         <div className="order-2 flex flex-col justify-center gap-6 px-8 py-10 lg:order-1 lg:col-span-6 lg:justify-self-stretch lg:py-0">
           <div>
-            <p className="text-[44px] font-extrabold leading-[1.02] tracking-[-0.025em] text-[#cea2fd] sm:text-[54px] lg:text-[72px] lg:leading-[72px] lg:tracking-[-1.8px]">
+            <p className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.025em] text-[#cea2fd] sm:text-[54px] lg:text-[72px] lg:leading-[72px] lg:tracking-[-1.8px]">
               {titlePrefix}
             </p>
-            <h1 className="bg-gradient-to-r from-[#cea2fd] to-[#bfdfee] bg-clip-text pb-3 text-[44px] font-extrabold leading-[1.02] tracking-[-0.025em] text-transparent sm:text-[54px] lg:text-[72px] lg:leading-[72px] lg:tracking-[-1.8px]">
+            <h1 className="bg-gradient-to-r from-[#cea2fd] to-[#bfdfee] bg-clip-text pb-3 text-[40px] font-extrabold leading-[1.02] tracking-[-0.025em] text-transparent sm:text-[54px] lg:text-[72px] lg:leading-[72px] lg:tracking-[-1.8px]">
               <span className="block">{titleGradientLine1}</span>
               <span className="block">{titleGradientLine2}</span>
             </h1>
           </div>
 
           <div className="w-full max-w-[512px]">
-            <p className="text-[18px] font-normal leading-[29.25px] text-[#5a5c5c]">
-              {description.map((line, index) => (
-                <span key={`${line}-${index}`} className="block">
-                  {line}
-                </span>
-              ))}
+            <p className="text-left text-[14px] font-normal leading-[29.25px] text-[#5a5c5c] md:text-[18px]">
+              {description}
             </p>
           </div>
 
